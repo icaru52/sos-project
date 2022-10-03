@@ -10,21 +10,20 @@
 class Board
 {
  private:
-  const int width_;
-  const int height_;
+  int width_;
+  int height_;
   Cell** board_;
 
  public:
   Board(int width, int height);
   ~Board();
-  int  GetWidth() const;
-  int  GetHeight() const;
-  char GetCell(int row, int col) const;
+  int GetWidth() const;
+  int GetHeight() const;
+  Cell GetCell(int row, int col);
   void SetCell(int row, int col, char symbol);
   bool IsFull() const;
   bool IsEmpty() const;
   void Clear();
-  
 };
 
 #endif // SOSPROJECT_INCLUDE_BOARD_H_

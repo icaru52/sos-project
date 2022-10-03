@@ -4,7 +4,8 @@
 
 #include "frame.h"
 
-Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, int width, int height)
+Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
+    const int width, const int height)
       : wxFrame(NULL, wxID_ANY, title, pos, size)
 {
   board_ = new Board(width, height);
@@ -18,10 +19,10 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, int 
     for(int x = 0; x < width; ++x)
     {
       btns_[y][x] = new wxButton(this, 10000 + y*width + x);
-      grid->Add(btn[y][x], 1, wxEXPAND | wxALL);
-      btn[y][x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
-      btn[y][x]->SetFont(font);
-      btn[y][x]->SetBackgroundColor(wxColour(*wxBLACK));
+      grid->Add(btns_[y][x], 1, wxEXPAND | wxALL);
+      btns_[y][x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
+      btns_[y][x]->SetFont(font);
+      btns_[y][x]->SetBackgroundColor(wxColour(*wxBLACK));
     }
   }
   this->SetSizer(grid);
@@ -30,7 +31,7 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, int 
 
 Frame::~Frame()
 {
-  for (int y = 0; y < height; ++y)
+  for (int y = 0; y < board_.GetHeight(); ++y)
   {
     delete[] btns_[y];
   }
@@ -39,6 +40,7 @@ Frame::~Frame()
 
 void Frame::onButtonClicked(wxCommandEvent& evt)
 {
+  int rows = board_.GetHeight();
   int y = (evt.GetId() - 10000) % rows;
   int x = (evt.GetId() - 10000) / rows;
 

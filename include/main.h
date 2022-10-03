@@ -22,7 +22,7 @@ class App : public wxApp
 
  private:
   Frame* frame_ = nullptr;
-}
+};
 
 #endif // SOS_INCLUDE_MAIN_H_
 

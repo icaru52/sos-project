@@ -7,17 +7,17 @@
 Board::Board(int width, int height)
 {
   width_ = width;
-  width_ = height;
+  height_ = height;
 
-  for(int y = 0; y < height; ++y)
+  for(int y = 0; y < height_; ++y)
   {
-    board_[y] = new Tile[width];
+    board_[y] = new Cell[width_];
   }
 }
 
 Board::~Board()
 {
-  for (int y = 0; y < height; ++y)
+  for (int y = 0; y < height_; ++y)
   {
     delete[] board_[y];
   }
@@ -34,21 +34,22 @@ int Board::GetHeight() const
   return height_;
 }
 
-Cell& Board::GetCell(int row, int col) const
+Cell Board::GetCell(int row, int col)
 {
-  if(row >= 0 && row < height_ && col >= 0 && col < width_)
-  {
+  // Just don't do it. :)
+  //if(row >= 0 && row < height_ && col >= 0 && col < width_)
+  //{
     return board_[row][col];
-  }
+  //}
 }
 
 bool Board::IsFull() const
 {
   bool is_full = true;
 
-  for (int y = 0; y < height; ++y)
+  for (int y = 0; y < height_; ++y)
   {
-    for (int x = 0; x < width; ++x)
+    for (int x = 0; x < width_; ++x)
     {
       if(board_.GetCell(y, x)->IsEmpty())
       {
@@ -64,9 +65,9 @@ bool Board::IsEmpty() const
 {
   bool is_empty = true;
 
-  for (int y = 0; y < height; ++y)
+  for (int y = 0; y < height_; ++y)
   {
-    for (int x = 0; x < width; ++x)
+    for (int x = 0; x < width_; ++x)
     {
       if(!board_.GetCell(y, x)->IsEmpty())
       {
@@ -80,9 +81,9 @@ bool Board::IsEmpty() const
 
 void Board::Clear()
 {
-  for (int y = 0; y < height; ++y)
+  for (int y = 0; y < height_; ++y)
   {
-    for (int x = 0; x < width; ++x)
+    for (int x = 0; x < width_; ++x)
     {
       board_.GetCell(y, x)->SetEmpty();
     }

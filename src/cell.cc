@@ -20,6 +20,7 @@ void Cell::SetSymbol(char symbol)
       this->symbol_ = symbol;
       break;
     default:
+      break;
   }
 }
 

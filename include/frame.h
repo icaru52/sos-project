@@ -18,16 +18,18 @@
 class Frame: public wxFrame
 {
  public:
-  Frame(const wxString& title, const wxPoint& pos, const wxSize& size);
+  Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
+      const int width,  const int height);
   ~Frame();
   void onButtonClicked(wxCommandEvent& evt);
-  void dialog();
-
+  
  private:
+  int width_;
+  int height_;
   Board board_;
   wxButton** btns_;
   wxDECLARE_EVENT_TABLE();
-}
+};
 
 #endif // SOS_INCLUDE_FRAME_H_
 

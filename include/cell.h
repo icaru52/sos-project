@@ -11,7 +11,7 @@ class Cell
   char symbol_;
 
  public:
-  Tile();
+  Cell();
 
   char GetSymbol() const;
   void SetSymbol(char symbol);
