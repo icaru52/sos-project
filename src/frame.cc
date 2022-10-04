@@ -6,9 +6,10 @@
 
 Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
     const int width, const int height)
-      : wxFrame(NULL, wxID_ANY, title, pos, size)
+      : wxFrame(NULL, wxID_ANY, title, pos, size),
+        board_(width, height)
 {
-  board_ = new Board(width, height);
+  //board_ = Board(width, height);
   wxGridSizer* grid = new wxGridSizer(height, width, 0, 0);
   wxFont font(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 
@@ -20,9 +21,9 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
     {
       btns_[y][x] = new wxButton(this, 10000 + y*width + x);
       grid->Add(btns_[y][x], 1, wxEXPAND | wxALL);
-      btns_[y][x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
-      btns_[y][x]->SetFont(font);
-      btns_[y][x]->SetBackgroundColor(wxColour(*wxBLACK));
+      btns_[y][x].Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
+      btns_[y][x].SetFont(font);
+      btns_[y][x].SetBackgroundColour(wxColour(*wxBLACK));
     }
   }
   this->SetSizer(grid);

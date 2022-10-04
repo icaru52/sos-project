@@ -14,7 +14,7 @@ class Cell
   Cell();
 
   char GetSymbol() const;
-  void SetSymbol(char symbol);
+  void SetSymbol(const char symbol);
   bool IsEmpty() const;
   void SetEmpty();
   bool IsS() const;

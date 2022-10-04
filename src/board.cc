@@ -4,7 +4,7 @@
 
 #include "board.h"
 
-Board::Board(int width, int height)
+Board::Board(const int width, const int height)
 {
   width_ = width;
   height_ = height;
@@ -34,7 +34,7 @@ int Board::GetHeight() const
   return height_;
 }
 
-Cell Board::GetCell(int row, int col)
+Cell& Board::GetCell(const int row, const int col)
 {
   // Just don't do it. :)
   //if(row >= 0 && row < height_ && col >= 0 && col < width_)
@@ -51,7 +51,7 @@ bool Board::IsFull() const
   {
     for (int x = 0; x < width_; ++x)
     {
-      if(board_.GetCell(y, x)->IsEmpty())
+      if(board_[y][x].IsEmpty())
       {
         is_full = false;
       }
@@ -69,7 +69,7 @@ bool Board::IsEmpty() const
   {
     for (int x = 0; x < width_; ++x)
     {
-      if(!board_.GetCell(y, x)->IsEmpty())
+      if(!board_[y][x].IsEmpty())
       {
         is_empty = false;
       }
@@ -85,7 +85,7 @@ void Board::Clear()
   {
     for (int x = 0; x < width_; ++x)
     {
-      board_.GetCell(y, x)->SetEmpty();
+      board_[y][x].SetEmpty();
     }
   }
 }

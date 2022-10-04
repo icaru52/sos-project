@@ -11,7 +11,7 @@ Cell::Cell()
 
 char Cell::GetSymbol() const { return symbol_; }
 
-void Cell::SetSymbol(char symbol)
+void Cell::SetSymbol(const char symbol)
 {
   switch(symbol)
   {

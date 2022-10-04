@@ -15,12 +15,12 @@ class Board
   Cell** board_;
 
  public:
-  Board(int width, int height);
+  Board(const int width, const int height);
   ~Board();
   int GetWidth() const;
   int GetHeight() const;
-  Cell GetCell(int row, int col);
-  void SetCell(int row, int col, char symbol);
+  Cell& GetCell(const int row, const int col);
+  void SetCell(const int row, const int col, const char symbol);
   bool IsFull() const;
   bool IsEmpty() const;
   void Clear();
