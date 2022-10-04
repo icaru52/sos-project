@@ -2,8 +2,8 @@
 // Project: SOS Semester Project
 // Programmer: Ian Rowse
 
-#ifndef SOSPROJECT_INCLUDE_CELL_H_
-#define SOSPROJECT_INCLUDE_CELL_H_
+#ifndef SOS_INCLUDE_CELL_H_
+#define SOS_INCLUDE_CELL_H_
 
 class Cell
 {
@@ -23,5 +23,5 @@ class Cell
   void SetO();
 };
 
-#endif // SOSPROJECT_INCLUDE_CELL_H_
+#endif // SOS_INCLUDE_CELL_H_
 

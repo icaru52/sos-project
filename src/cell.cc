@@ -15,6 +15,7 @@ void Cell::SetSymbol(const char symbol)
 {
   switch(symbol)
   {
+    case ' ':
     case 'S':
     case 'O':
       this->symbol_ = symbol;
