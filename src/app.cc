@@ -1,8 +1,8 @@
-// File: main.cc
+// File: app.cc
 // Project: SOS Semester Project
 // Programmer: Ian Rowse
 
-#include "main.h"
+#include "app.h"
 
 IMPLEMENT_APP(App);
 

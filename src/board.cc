@@ -8,6 +8,9 @@ Board::Board(const int width, const int height)
 {
   width_ = width;
   height_ = height;
+  turn_ = 0;
+  //filled_cells_ = 0;
+  grid_ = new Cell*[height_];
 
   for(int y = 0; y < height_; ++y)
   {
@@ -34,23 +37,47 @@ int Board::GetHeight() const
   return height_;
 }
 
-bool Board:IsOutOfBounds(const int row, const int col) const
+bool Board::InBounds(const int row, const int col) const
 {
-  return row > 0 && row < height_ && col > 0 && col < width_;
+  return row >= 0 && row < height_ && col >= 0 && col < width_;
+}
+
+bool Board::OutOfBounds(const int row, const int col) const
+{
+  return row < 0 && row >= height_ && col < 0 && col >= width_;
 }
 
 Cell& Board::GetCell(const int row, const int col)
 {
   // Just don't do it. :)
-  //if(row >= 0 && row < height_ && col >= 0 && col < width_)
+  //if(this->InBounds(row, col))
   //{
     return grid_[row][col];
   //}
 }
 
-bool Board::IsFull() const
+int Board::CountFilledCells() const
 {
-  bool is_full = true;
+  int filled_count = 0;
+
+  for (int y = 0; y < height_; ++y)
+  {
+    for (int x = 0; x < width_; ++x)
+    {
+      if(!grid_[y][x].IsEmpty())
+      //if(!this->GetCell(y, x).IsEmpty())
+      {
+        filled_count++;
+      }
+    }
+  }
+
+  return filled_count;
+}
+
+int Board::CountEmptyCells() const
+{
+  int empty_count = 0;
 
   for (int y = 0; y < height_; ++y)
   {
@@ -58,35 +85,27 @@ bool Board::IsFull() const
     {
       if(grid_[y][x].IsEmpty())
       {
-        is_full = false;
+        empty_count++;
       }
     }
   }
 
-  return is_full;
+  return empty_count;
+}
+
+bool Board::IsFull() const
+{
+  return this->CountEmptyCells() == 0;
 }
 
 bool Board::IsEmpty() const
 {
-  bool is_empty = true;
-
-  for (int y = 0; y < height_; ++y)
-  {
-    for (int x = 0; x < width_; ++x)
-    {
-      if(!grid_[y][x].IsEmpty())
-      {
-        is_empty = false;
-      }
-    }
-  }
-
-  return is_empty;
+  return this->CountFilledCells() == 0;
 }
 
 int Board::CreatesSOS(const int row, const int col, const char symbol) const
 {
-  bool sos_count;
+  int sos_count;
 
   const int offsets[8][2] = {
     {-1,-1}, // north west
@@ -107,7 +126,7 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         int y_off = offsets[i][0];
         int x_off = offsets[i][1];
         
-        if(!IsOutOfBounds(row + y_off*2, col + x_off*2))
+        if(InBounds(row + y_off*2, col + x_off*2))
         {
           if(grid_[row + y_off  ][col + x_off  ].IsO() && 
              grid_[row + y_off*2][col + x_off*2].IsS())
@@ -125,8 +144,8 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         int y_off = offsets[i][0];
         int x_off = offsets[i][1];
         
-        if((!IsOutOfBounds(row + y_off, col + x_off)) && 
-           (!IsOutOfBounds(row - y_off, col - x_off)))
+        if((InBounds(row + y_off, col + x_off)) && 
+           (InBounds(row - y_off, col - x_off)))
         {
           if(grid_[row + y_off][col + x_off].IsS() && 
              grid_[row - y_off][col - x_off].IsS())
@@ -141,6 +160,7 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
     //case ' ':
     default:
       sos_count = 0;
+
       break;
   }
 

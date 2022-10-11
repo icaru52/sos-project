@@ -11,7 +11,7 @@
 // This will take effect if the compiler does not support precompilation.
 #ifndef WX_PRECOMP
   #include <wx/wx.h>
-#endif
+#endif // WX_PRECOMP
 
 #include "board.h"
 
@@ -24,8 +24,6 @@ class Frame: public wxFrame
   void onButtonClicked(wxCommandEvent& evt);
   
  private:
-  int width_;
-  int height_;
   Board board_;
   wxButton** btns_;
   wxDECLARE_EVENT_TABLE();
