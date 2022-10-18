@@ -45,12 +45,17 @@ bool Board::OutOfBounds(const int row, const int col) const
          col >= width_;
 }
 
-Cell& Board::GetCell(const int index)
+const Cell& Board::GetCell(const int index) const
 {
     return grid_[index];
 }
 
-const Cell& Board::GetCell(const int index) const
+const Cell& Board::GetCell(const int row, const int col) const
+{
+    return grid_[row * width_ + col];
+}
+
+Cell& Board::GetCell(const int index)
 {
     return grid_[index];
 }
@@ -60,23 +65,15 @@ Cell& Board::GetCell(const int row, const int col)
     return grid_[row * width_ + col];
 }
 
-const Cell& Board::GetCell(const int row, const int col) const
-{
-    return grid_[row * width_ + col];
-}
-
 int Board::CountFilledCells() const
 {
   int filled_count = 0;
 
-  for (int y = 0; y < height_; ++y)
+  for (int i = 0; i < height_ * width_; ++i)
   {
-    for (int x = 0; x < width_; ++x)
+    if(!GetCell(i).IsEmpty())
     {
-      if(!GetCell(y, x).IsEmpty())
-      {
-        filled_count++;
-      }
+      filled_count++;
     }
   }
 
@@ -87,14 +84,11 @@ int Board::CountEmptyCells() const
 {
   int empty_count = 0;
 
-  for (int y = 0; y < height_; ++y)
+  for (int i = 0; i < height_ * width_; ++i)
   {
-    for (int x = 0; x < width_; ++x)
+    if(GetCell(i).IsEmpty())
     {
-      if(GetCell(y, x).IsEmpty())
-      {
-        empty_count++;
-      }
+      empty_count++;
     }
   }
 
@@ -177,12 +171,9 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
 
 void Board::Clear()
 {
-  for (int y = 0; y < height_; ++y)
+  for (int i = 0; i < height_ * width_; ++i)
   {
-    for (int x = 0; x < width_; ++x)
-    {
-      GetCell(y, x).SetEmpty();
-    }
+    GetCell(i).SetEmpty();
   }
 }
 

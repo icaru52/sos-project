@@ -26,10 +26,10 @@ class Board
   bool InBounds(const int row, const int col) const;
   bool OutOfBounds(const int row, const int col) const;
   
-  Cell& Board::GetCell(const int index);
-  const Cell& Board::GetCell(const int index) const;
-  Cell& GetCell(const int row, const int col);
+  const Cell& GetCell(const int index) const;
   const Cell& GetCell(const int row, const int col) const;
+  Cell& GetCell(const int index);
+  Cell& GetCell(const int row, const int col);
   
   int CountFilledCells() const;
   int CountEmptyCells() const;
