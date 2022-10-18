@@ -19,17 +19,26 @@ class Board
  public:
   Board(const int width, const int height);
   ~Board();
+  
   int GetWidth() const;
   int GetHeight() const;
+  
   bool InBounds(const int row, const int col) const;
   bool OutOfBounds(const int row, const int col) const;
+  
+  Cell& Board::GetCell(const int index);
+  const Cell& Board::GetCell(const int index) const;
   Cell& GetCell(const int row, const int col);
   const Cell& GetCell(const int row, const int col) const;
+  
   int CountFilledCells() const;
   int CountEmptyCells() const;
+  
   bool IsFull() const;
   bool IsEmpty() const;
+  
   int CreatesSOS(const int row, const int col, const char symbol) const;
+  
   void Clear();
 };
 

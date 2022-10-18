@@ -31,12 +31,28 @@ int Board::GetHeight() const
 
 bool Board::InBounds(const int row, const int col) const
 {
-  return row >= 0 && row < height_ && col >= 0 && col < width_;
+  return row >= 0 && 
+         row < height_ && 
+         col >= 0 && 
+         col < width_;
 }
 
 bool Board::OutOfBounds(const int row, const int col) const
 {
-  return row < 0 && row >= height_ && col < 0 && col >= width_;
+  return row < 0 && 
+         row >= height_ && 
+         col < 0 && 
+         col >= width_;
+}
+
+Cell& Board::GetCell(const int index)
+{
+    return grid_[index];
+}
+
+const Cell& Board::GetCell(const int index) const
+{
+    return grid_[index];
 }
 
 Cell& Board::GetCell(const int row, const int col)
