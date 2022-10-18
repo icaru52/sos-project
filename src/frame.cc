@@ -12,6 +12,8 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
         board_(width, height)
 {
   wxBoxSizer *hbox0 = new wxBoxSizer(wxHORIZONTAL);
+  //wxBoxSizer *vbox0 = new wxBoxSizer(wxVERTICAL);
+  //wxBoxSizer *vbox1 = new wxBoxSizer(wxVertical);
 
   btns_ = new wxButton * [width * height];
   wxGridSizer* grid = new wxGridSizer(height, width, 5, 5);
@@ -25,16 +27,18 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
     btns_[i]->SetFont(font);
     btns_[i]->SetBackgroundColour(wxColour(*wxBLACK));
   }
-  this->SetSizer(grid);
+  //this->SetSizer(grid);
   grid->Layout();
 
   wxPanel *panel = new wxPanel(this, -1);
 
   wxButton *btn0 = new wxButton(panel, wxID_ANY, wxT("Hello"));
 
-  hbox0->Add(grid, 0, wxLEFT, 8);
-  hbox0->Add(btn0, 0);
-  //hbox0->Add(panel, 0, wxEXPAND, 10);
+  hbox0->Add(grid, 0, wxLEFT | wxEXPAND, 8);
+  //hbox0->Add(btn0, 0, wxRIGHT | wxEXPAND);
+  hbox0->Add(panel, 0, wxEXPAND, 10);
+
+  this->SetSizer(hbox0);
 }
 
 Frame::~Frame()
