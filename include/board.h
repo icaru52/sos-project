@@ -14,7 +14,7 @@ class Board
   int height_;
   int turn_;
   //int filled_cells_;
-  Cell** grid_;
+  Cell* grid_;
 
  public:
   Board(const int width, const int height);
@@ -24,7 +24,7 @@ class Board
   bool InBounds(const int row, const int col) const;
   bool OutOfBounds(const int row, const int col) const;
   Cell& GetCell(const int row, const int col);
-  Cell& GetCell(const int row, const int col) const;
+  const Cell& GetCell(const int row, const int col) const;
   int CountFilledCells() const;
   int CountEmptyCells() const;
   bool IsFull() const;

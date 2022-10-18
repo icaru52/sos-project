@@ -10,20 +10,12 @@ Board::Board(const int width, const int height)
   height_ = height;
   turn_ = 0;
   //filled_cells_ = 0;
-  grid_ = new Cell*[height_];
-
-  for(int y = 0; y < height_; ++y)
-  {
-    grid_[y] = new Cell[width_];
-  }
+  
+  grid_ = new Cell[height_ * width_];
 }
 
 Board::~Board()
 {
-  for (int y = 0; y < height_; ++y)
-  {
-    delete[] grid_[y];
-  }
   delete[] grid_;
 }
 
@@ -49,11 +41,12 @@ bool Board::OutOfBounds(const int row, const int col) const
 
 Cell& Board::GetCell(const int row, const int col)
 {
-  // Just don't do it. :)
-  //if(this->InBounds(row, col))
-  //{
-    return grid_[row][col];
-  //}
+    return grid_[row * width_ + col];
+}
+
+const Cell& Board::GetCell(const int row, const int col) const
+{
+    return grid_[row * width_ + col];
 }
 
 int Board::CountFilledCells() const
@@ -64,8 +57,7 @@ int Board::CountFilledCells() const
   {
     for (int x = 0; x < width_; ++x)
     {
-      if(!grid_[y][x].IsEmpty())
-      //if(!this->GetCell(y, x).IsEmpty())
+      if(!GetCell(y, x).IsEmpty())
       {
         filled_count++;
       }
@@ -83,7 +75,7 @@ int Board::CountEmptyCells() const
   {
     for (int x = 0; x < width_; ++x)
     {
-      if(grid_[y][x].IsEmpty())
+      if(GetCell(y, x).IsEmpty())
       {
         empty_count++;
       }
@@ -128,8 +120,8 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         
         if(InBounds(row + y_off*2, col + x_off*2))
         {
-          if(grid_[row + y_off  ][col + x_off  ].IsO() && 
-             grid_[row + y_off*2][col + x_off*2].IsS())
+          if(GetCell(row + y_off,   col + x_off  ).IsO() && 
+             GetCell(row + y_off*2, col + x_off*2).IsS())
           {
             ++sos_count;
           }
@@ -147,8 +139,8 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         if((InBounds(row + y_off, col + x_off)) && 
            (InBounds(row - y_off, col - x_off)))
         {
-          if(grid_[row + y_off][col + x_off].IsS() && 
-             grid_[row - y_off][col - x_off].IsS())
+          if(GetCell(row + y_off, col + x_off).IsS() && 
+             GetCell(row - y_off, col - x_off).IsS())
           {
             ++sos_count;
           }
@@ -173,7 +165,7 @@ void Board::Clear()
   {
     for (int x = 0; x < width_; ++x)
     {
-      grid_[y][x].SetEmpty();
+      GetCell(y, x).SetEmpty();
     }
   }
 }

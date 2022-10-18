@@ -5,6 +5,7 @@
 #ifndef SOS_INCLUDE_TUI_H_
 #define SOS_INCLUDE_TUI_H_
 
+#include <iostream>
 
 
 #endif // SOS_INCLUDE_TUI_H_

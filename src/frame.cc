@@ -11,8 +11,10 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
       : wxFrame(NULL, wxID_ANY, title, pos, size),
         board_(width, height)
 {
+  wxBoxSizer *hbox0 = new wxBoxSizer(wxHORIZONTAL);
+
   btns_ = new wxButton * [width * height];
-  wxGridSizer* grid = new wxGridSizer(height, width, 0, 0);
+  wxGridSizer* grid = new wxGridSizer(height, width, 5, 5);
   wxFont font(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 
   for(int i = 0; i < width * height; ++i)
@@ -25,6 +27,14 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
   }
   this->SetSizer(grid);
   grid->Layout();
+
+  wxPanel *panel = new wxPanel(this, -1);
+
+  wxButton *btn0 = new wxButton(panel, wxID_ANY, wxT("Hello"));
+
+  hbox0->Add(grid, 0, wxLEFT, 8);
+  hbox0->Add(btn0, 0);
+  //hbox0->Add(panel, 0, wxEXPAND, 10);
 }
 
 Frame::~Frame()
@@ -44,5 +54,7 @@ void Frame::onButtonClicked(wxCommandEvent& evt)
   cell->SetS();
 
   btns_[i]->SetLabel(cell->GetSymbol());
+
+  //board_.CountFilledCells();
 }
 
