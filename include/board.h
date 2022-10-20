@@ -5,8 +5,6 @@
 #ifndef SOS_INCLUDE_BOARD_H_
 #define SOS_INCLUDE_BOARD_H_
 
-#include "cell.h"
-
 class Board
 {
  private:
@@ -14,8 +12,7 @@ class Board
   int height_;
   int turn_;
   //int filled_cells_;
-  Cell* grid_;
-  //char* grid_;
+  char* grid_;
 
  public:
   Board(const int width, const int height);
@@ -26,12 +23,11 @@ class Board
   
   bool InBounds(const int row, const int col) const;
   bool OutOfBounds(const int row, const int col) const;
-  
-  const Cell& GetCell(const int index) const;
-  const Cell& GetCell(const int row, const int col) const;
-  Cell& GetCell(const int index);
-  Cell& GetCell(const int row, const int col);
-  
+
+  char GetMark(const int row, const int col) const;
+  void SetMark(const int row, const int col, const char mark);
+  bool MarkIs(const int row, const int col, const char mark) const;
+
   int CountFilledCells() const;
   int CountEmptyCells() const;
   

@@ -48,18 +48,20 @@ Frame::~Frame()
 
 void Frame::onButtonClicked(wxCommandEvent& evt)
 {
-  //int rows = board_.GetHeight();
+  int rows = board_.GetHeight();
   int i = evt.GetId() - 10000;
-  //int y = i % rows;
-  //int x = i / rows;
+  int y = i % rows;
+  int x = i / rows;
 
   //Cell* cell = &board_.GetCell(y, x);
-  Cell* cell = &board_.GetCell(i);
+  //Cell* cell = &board_.GetCell(i);
 
   //cell->SetS();
-  cell->SetMark('O');
+  //cell->SetMark('O');
+  board_.SetMark(y, x, 'O');
 
-  btns_[i]->SetLabel(cell->GetMark());
+  //btns_[i]->SetLabel(cell->GetMark());
+  btns_[i]->SetLabel(board_.GetMark(y, x));
 
   //board_.CountFilledCells();
 }
