@@ -12,6 +12,7 @@ Board::Board(const int width, const int height)
   //filled_cells_ = 0;
   
   grid_ = new Cell[height_ * width_];
+  //grid_ = new char[height * width];
 }
 
 Board::~Board()
@@ -71,7 +72,7 @@ int Board::CountFilledCells() const
 
   for (int i = 0; i < height_ * width_; ++i)
   {
-    if(!GetCell(i).IsEmpty())
+    if(!GetCell(i).MarkIs(' '))
     {
       filled_count++;
     }
@@ -86,7 +87,7 @@ int Board::CountEmptyCells() const
 
   for (int i = 0; i < height_ * width_; ++i)
   {
-    if(GetCell(i).IsEmpty())
+    if(GetCell(i).MarkIs(' '))
     {
       empty_count++;
     }
@@ -130,8 +131,8 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         
         if(InBounds(row + y_off*2, col + x_off*2))
         {
-          if(GetCell(row + y_off,   col + x_off  ).IsO() && 
-             GetCell(row + y_off*2, col + x_off*2).IsS())
+          if(GetCell(row + y_off,   col + x_off  ).MarkIs('O') && 
+             GetCell(row + y_off*2, col + x_off*2).MarkIs('S'))
           {
             ++sos_count;
           }
@@ -149,8 +150,8 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
         if((InBounds(row + y_off, col + x_off)) && 
            (InBounds(row - y_off, col - x_off)))
         {
-          if(GetCell(row + y_off, col + x_off).IsS() && 
-             GetCell(row - y_off, col - x_off).IsS())
+          if(GetCell(row + y_off, col + x_off).MarkIs('S') && 
+             GetCell(row - y_off, col - x_off).MarkIs('S'))
           {
             ++sos_count;
           }

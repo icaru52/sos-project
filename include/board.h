@@ -15,6 +15,7 @@ class Board
   int turn_;
   //int filled_cells_;
   Cell* grid_;
+  //char* grid_;
 
  public:
   Board(const int width, const int height);

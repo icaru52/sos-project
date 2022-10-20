@@ -56,9 +56,10 @@ void Frame::onButtonClicked(wxCommandEvent& evt)
   //Cell* cell = &board_.GetCell(y, x);
   Cell* cell = &board_.GetCell(i);
 
-  cell->SetS();
+  //cell->SetS();
+  cell->SetMark('O');
 
-  btns_[i]->SetLabel(cell->GetSymbol());
+  btns_[i]->SetLabel(cell->GetMark());
 
   //board_.CountFilledCells();
 }

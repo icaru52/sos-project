@@ -6,32 +6,32 @@
 
 Cell::Cell()
 {
-  symbol_ = ' ';
+  mark_ = ' ';
 }
 
-char Cell::GetSymbol() const { return symbol_; }
+char Cell::GetMark() const { return mark_; }
 
-void Cell::SetSymbol(const char symbol)
+void Cell::SetMark(const char mark)
 {
-  switch(symbol)
+  switch(mark)
   {
     case ' ':
     case 'S':
     case 'O':
-      this->symbol_ = symbol;
+      this->mark_ = mark;
       break;
     default:
       break;
   }
 }
 
-bool Cell::IsEmpty() const { return symbol_ == ' '; }
-void Cell::SetEmpty() { symbol_ = ' '; }
+bool Cell::MarkIs(const char mark) const
+{
+  return mark_ == mark;
+}
 
-bool Cell::IsS() const { return symbol_ == 'S'; }
-void Cell::SetS() { symbol_ = 'S'; }
-
-bool Cell::IsO() const { return symbol_ == 'O'; }
-void Cell::SetO() { symbol_ = 'O'; }
+void Cell::SetEmpty() { mark_ = ' '; }
+void Cell::SetS() { mark_ = 'S'; }
+void Cell::SetO() { mark_ = 'O'; }
 
 

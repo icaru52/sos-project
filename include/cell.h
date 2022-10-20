@@ -8,18 +8,17 @@
 class Cell
 {
  private:
-  char symbol_;
+  char mark_;
 
  public:
   Cell();
 
-  char GetSymbol() const;
-  void SetSymbol(const char symbol);
-  bool IsEmpty() const;
+  char GetMark() const;
+  void SetMark(const char mark);
+  bool MarkIs(const char mark) const;
+
   void SetEmpty();
-  bool IsS() const;
   void SetS();
-  bool IsO() const;
   void SetO();
 };
 
