@@ -6,10 +6,10 @@
 
 Board::Board(const int width, const int height)
 {
-  width_ = width;
   height_ = height;
+  width_ = width;
   turn_ = 0;
-  //filled_cells_ = 0;
+  marked_cells_ = 0;
   
   grid_ = new char[height_ * width_];
 
@@ -55,18 +55,24 @@ char Board::GetMark(const int row, const int col) const
   return grid_[row * width_ + col];
 }
 
-void Board::SetMark(const int row, const int col, const char mark)
+bool Board::SetMark(const int row, const int col, const char mark)
 {
-   switch(mark)
+  if(!this->MarkIs(row, col, ' '))
   {
-    case ' ':
-    case 'S':
-    case 'O':
-      grid_[row * width_ + col] = mark;
-      break;
-    default:
-      break;
-  } 
+    // The space already contains a character
+    return false;
+  }
+  else if(mark != 'S' && mark != 'O')
+  {
+    // The mark is not valid
+    return false;
+  }
+  else
+  {
+    grid_[row * width_ + col] = mark;
+    marked_cells_++;
+    return true;
+  }
 }
 
 bool Board::MarkIs(const int row, const int col, const char mark) const
@@ -74,44 +80,24 @@ bool Board::MarkIs(const int row, const int col, const char mark) const
   return grid_[row * width_ + col] == mark;
 }
 
-int Board::CountFilledCells() const
+int Board::CountMarkedCells() const
 {
-  int filled_count = 0;
-
-  for (int i = 0; i < height_ * width_; ++i)
-  {
-    if(grid_[i] != ' ')
-    {
-      filled_count++;
-    }
-  }
-
-  return filled_count;
+  return marked_cells_;
 }
 
-int Board::CountEmptyCells() const
+int Board::CountUnmarkedCells() const
 {
-  int empty_count = 0;
-
-  for (int i = 0; i < height_ * width_; ++i)
-  {
-    if(grid_[i] == ' ')
-    {
-      empty_count++;
-    }
-  }
-
-  return empty_count;
+  return height_ * width_ - marked_cells_;
 }
 
 bool Board::IsFull() const
 {
-  return this->CountEmptyCells() == 0;
+  return marked_cells_ == height_ * width_;
 }
 
 bool Board::IsEmpty() const
 {
-  return this->CountFilledCells() == 0;
+  return marked_cells_ == 0;
 }
 
 int Board::CreatesSOS(const int row, const int col, const char symbol) const
@@ -184,5 +170,6 @@ void Board::Clear()
   {
     grid_[i] = ' ';
   }
+  marked_cells_ = 0;
 }
 

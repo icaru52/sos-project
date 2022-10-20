@@ -8,10 +8,10 @@
 class Board
 {
  private:
-  int width_;
   int height_;
+  int width_;
   int turn_;
-  //int filled_cells_;
+  int marked_cells_;
   char* grid_;
 
  public:
@@ -25,11 +25,11 @@ class Board
   bool OutOfBounds(const int row, const int col) const;
 
   char GetMark(const int row, const int col) const;
-  void SetMark(const int row, const int col, const char mark);
+  bool SetMark(const int row, const int col, const char mark);
   bool MarkIs(const int row, const int col, const char mark) const;
 
-  int CountFilledCells() const;
-  int CountEmptyCells() const;
+  int CountMarkedCells() const;
+  int CountUnmarkedCells() const;
   
   bool IsFull() const;
   bool IsEmpty() const;
