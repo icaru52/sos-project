@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+void MakeMove();
+void PrintGrid() const;
 
 #endif // SOS_INCLUDE_TUI_H_
 

@@ -8,10 +8,10 @@ Board::Board(const int width, const int height)
 {
   height_ = height;
   width_ = width;
+  mark_count_ = 0;
   turn_ = 0;
-  marked_cells_ = 0;
   
-  grid_ = new char[height_ * width_];
+  grid_ = new char[height * width];
 
   for(int i = 0; i < height * width; ++i)
   {
@@ -32,6 +32,16 @@ int Board::GetWidth() const
 int Board::GetHeight() const
 {
   return height_;
+}
+
+int Board::GetMarkCount() const
+{
+  return mark_count_;
+}
+
+int Board::GetUnmarkedCount() const
+{
+  return height_ * width_ - mark_count_;
 }
 
 bool Board::InBounds(const int row, const int col) const
@@ -70,37 +80,34 @@ bool Board::SetMark(const int row, const int col, const char mark)
   else
   {
     grid_[row * width_ + col] = mark;
-    marked_cells_++;
+    mark_count_++;
     return true;
   }
 }
 
 bool Board::MarkIs(const int row, const int col, const char mark) const
 {
-  return grid_[row * width_ + col] == mark;
-}
-
-int Board::CountMarkedCells() const
-{
-  return marked_cells_;
-}
-
-int Board::CountUnmarkedCells() const
-{
-  return height_ * width_ - marked_cells_;
+  if(OutOfBounds(row, col))
+  {
+    return false;
+  }
+  else
+  {
+    return grid_[row * width_ + col] == mark;
+  }
 }
 
 bool Board::IsFull() const
 {
-  return marked_cells_ == height_ * width_;
+  return mark_count_ == height_ * width_;
 }
 
 bool Board::IsEmpty() const
 {
-  return marked_cells_ == 0;
+  return mark_count_ == 0;
 }
 
-int Board::CreatesSOS(const int row, const int col, const char symbol) const
+int Board::CreatesSOS(const int row, const int col, const char mark) const
 {
   int sos_count;
 
@@ -115,7 +122,7 @@ int Board::CreatesSOS(const int row, const int col, const char symbol) const
     { 0,-1}, //       west
   };
 
-  switch(symbol)
+  switch(mark)
   {
     case 'S':
       for(int i = 0; i < 8; ++i)
@@ -170,6 +177,6 @@ void Board::Clear()
   {
     grid_[i] = ' ';
   }
-  marked_cells_ = 0;
+  mark_count_ = 0;
 }
 
