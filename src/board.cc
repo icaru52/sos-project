@@ -3,20 +3,13 @@
 // Programmer: Ian Rowse
 
 #include "board.h"
+#include <cstring>
 
-Board::Board(const int width, const int height)
+Board::Board(const int height, const int width)
+  : height_(height), width_(width), mark_count_(0), turn_(0)
 {
-  height_ = height;
-  width_ = width;
-  mark_count_ = 0;
-  turn_ = 0;
-  
   grid_ = new char[height * width];
-
-  for(int i = 0; i < height * width; ++i)
-  {
-    grid_[i] = ' ';
-  }
+  std::memset(grid_, ' ', height * width * sizeof(char));
 }
 
 Board::~Board()
@@ -173,10 +166,7 @@ int Board::CreatesSOS(const int row, const int col, const char mark) const
 
 void Board::Clear()
 {
-  for (int i = 0; i < height_ * width_; ++i)
-  {
-    grid_[i] = ' ';
-  }
+  std::memset(grid_, ' ', height_ * width_ * sizeof(char));
   mark_count_ = 0;
 }
 

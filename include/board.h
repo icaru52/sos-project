@@ -15,7 +15,7 @@ class Board
   char* grid_;
 
  public:
-  Board(const int width, const int height);
+  Board(const int height = 8, const int width = 8);
   ~Board();
   
   int GetWidth() const;
