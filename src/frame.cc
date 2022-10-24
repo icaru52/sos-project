@@ -11,9 +11,8 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
       : wxFrame(NULL, wxID_ANY, title, pos, size),
         board_(width, height)
 {
-  wxBoxSizer *hbox0 = new wxBoxSizer(wxHORIZONTAL);
-  //wxBoxSizer *vbox0 = new wxBoxSizer(wxVERTICAL);
-  //wxBoxSizer *vbox1 = new wxBoxSizer(wxVertical);
+  wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
 
   btns_ = new wxButton * [width * height];
   wxGridSizer* grid = new wxGridSizer(height, width, 5, 5);
@@ -27,18 +26,28 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
     btns_[i]->SetFont(font);
     btns_[i]->SetBackgroundColour(wxColour(*wxBLACK));
   }
-  //this->SetSizer(grid);
   grid->Layout();
 
-  wxPanel *panel = new wxPanel(this, -1);
+  hbox->Add(grid, 0, wxLEFT | wxEXPAND, 10);
 
-  wxButton *btn0 = new wxButton(panel, wxID_ANY, wxT("Hello"));
+  wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY);
+  vbox->Add(text);
 
-  hbox0->Add(grid, 0, wxLEFT | wxEXPAND, 8);
-  //hbox0->Add(btn0, 0, wxRIGHT | wxEXPAND);
-  hbox0->Add(panel, 0, wxEXPAND, 10);
+  rb_simple_ = new wxRadioButton(this, wxID_ANY, wxT("Simple Game"), 
+      wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+  vbox->Add(rb_simple_);
+  rb_general_ = new wxRadioButton(this, wxID_ANY, wxT("General Game"));
+  vbox->Add(rb_general_);
+  
+  rb_s_ = new wxRadioButton(this, wxID_ANY, wxT("S"), wxDefaultPosition, 
+      wxDefaultSize, wxRB_GROUP);
+  vbox->Add(rb_s_);
+  rb_o_ = new wxRadioButton(this, wxID_ANY, wxT("O"));
+  vbox->Add(rb_o_);
 
-  this->SetSizer(hbox0);
+  hbox->Add(vbox, 0, wxRIGHT | wxEXPAND, 10);
+
+  this->SetSizer(hbox);
 }
 
 Frame::~Frame()
@@ -53,7 +62,9 @@ void Frame::onButtonClicked(wxCommandEvent& evt)
   int y = i % rows;
   int x = i / rows;
 
-  board_.SetMark(y, x, 'O');
+  char letter = rb_s_->GetValue() ? 'S' : 'O';
+
+  board_.SetMark(y, x, letter);
 
   btns_[i]->SetLabel(board_.GetMark(y, x));
 }

@@ -22,10 +22,16 @@ class Frame: public wxFrame
       const int width,  const int height);
   ~Frame();
   void onButtonClicked(wxCommandEvent& evt);
-  
+
  private:
   Board board_;
   wxButton** btns_;
+
+  wxRadioButton* rb_simple_;
+  wxRadioButton* rb_general_;
+  wxRadioButton* rb_s_;
+  wxRadioButton* rb_o_;
+
   wxDECLARE_EVENT_TABLE();
 };
 
