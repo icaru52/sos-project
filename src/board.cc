@@ -170,3 +170,12 @@ void Board::Clear()
   mark_count_ = 0;
 }
 
+void Board::Reset(const int height, const int width)
+{
+  delete[] grid_;
+  grid_ = new char[height * width];
+  std::memset(grid_, ' ', height * width * sizeof(char));
+  mark_count_ = 0;
+  turn_ = 0;
+}
+

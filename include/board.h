@@ -37,6 +37,7 @@ class Board
   int CreatesSOS(const int row, const int col, const char mark) const;
   
   void Clear();
+  void Reset(const int height, const int width);
 };
 
 #endif // SOS_INCLUDE_BOARD_H_
