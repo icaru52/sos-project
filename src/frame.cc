@@ -3,35 +3,39 @@
 // Programmer: Ian Rowse
 
 #include "frame.h"
+#include <iostream>
 
 wxBEGIN_EVENT_TABLE(Frame, wxFrame) wxEND_EVENT_TABLE();
 
 Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
     const int width, const int height)
       : wxFrame(NULL, wxID_ANY, title, pos, size),
-        board_(width, height)
+        board_(height, width)
 {
   wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
   wxBoxSizer* vbox = new wxBoxSizer(wxVERTICAL);
 
   btns_ = new wxButton * [width * height];
-  wxGridSizer* grid = new wxGridSizer(height, width, 5, 5);
+  grid_ = new wxGridSizer(height, width, 5, 5);
   wxFont font(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 
   for(int i = 0; i < width * height; ++i)
   {
     btns_[i] = new wxButton(this, 10000 + i);
-    grid->Add(btns_[i], 1, wxEXPAND | wxALL);
+    grid_->Add(btns_[i], 1, wxEXPAND | wxALL);
     btns_[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
     btns_[i]->SetFont(font);
     btns_[i]->SetBackgroundColour(wxColour(*wxBLACK));
   }
-  grid->Layout();
+  grid_->Layout();
 
-  hbox->Add(grid, 0, wxLEFT | wxEXPAND, 10);
+  hbox->Add(grid_, 0, wxLEFT | wxEXPAND, 10);
 
-  wxTextCtrl *text = new wxTextCtrl(this, wxID_ANY);
-  vbox->Add(text);
+  text_ = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, 
+      wxDefaultSize, wxTE_PROCESS_ENTER);
+  
+  vbox->Add(text_);
+  text_->Bind(wxEVT_TEXT_ENTER, &Frame::onTextBoxEnter, this);
 
   rb_simple_ = new wxRadioButton(this, wxID_ANY, wxT("Simple Game"), 
       wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
@@ -52,7 +56,14 @@ Frame::Frame(const wxString& title, const wxPoint& pos, const wxSize& size,
 
 Frame::~Frame()
 {
-  delete[] btns_; 
+  for(int i = 0; i < board_.GetWidth() * board_.GetHeight(); ++i)
+  {
+    //delete btns_[i];
+    btns_[i]->Destroy();
+  }
+  delete[] btns_;
+  delete grid_;
+  text_->Destroy();
 }
 
 void Frame::onButtonClicked(wxCommandEvent& evt)
@@ -67,5 +78,41 @@ void Frame::onButtonClicked(wxCommandEvent& evt)
   board_.SetMark(y, x, letter);
 
   btns_[i]->SetLabel(board_.GetMark(y, x));
+}
+
+void Frame::onTextBoxEnter(wxCommandEvent& event)
+{
+  int dimension = wxAtoi(text_->GetLineText(0));
+  ResizeGrid(dimension, dimension);
+}
+
+void Frame::ResizeGrid(const int height, const int width)
+{
+  for(int i = 0; i < board_.GetHeight() * board_.GetWidth(); ++i)
+  {
+    std::cout << i << "\n";
+    grid_->Remove(i);
+    btns_[i]->Destroy();
+  }
+  delete[] btns_;
+
+  btns_ = new wxButton * [height * width];
+  //grid_ = new wxGridSizer(height, width, height, width);
+  grid_->SetRows(height);
+  grid_->SetCols(width);
+
+  wxFont font(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+
+  for(int i = 0; i < height * width; ++i)
+  {
+    btns_[i] = new wxButton(this, 10000 + i);
+    grid_->Add(btns_[i], 1, wxEXPAND | wxALL);
+    btns_[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &Frame::onButtonClicked, this);
+    btns_[i]->SetFont(font);
+    btns_[i]->SetBackgroundColour(wxColour(*wxBLACK));
+  }
+  grid_->Layout();
+
+  board_.Reset(height, width);
 }
 

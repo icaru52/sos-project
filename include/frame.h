@@ -21,11 +21,15 @@ class Frame: public wxFrame
   Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
       const int width,  const int height);
   ~Frame();
-  void onButtonClicked(wxCommandEvent& evt);
+  void onButtonClicked(wxCommandEvent& event);
+  void onTextBoxEnter(wxCommandEvent& event);
+  void ResizeGrid(const int height, const int width);
 
  private:
   Board board_;
   wxButton** btns_;
+  wxGridSizer* grid_;
+  wxTextCtrl* text_;
 
   wxRadioButton* rb_simple_;
   wxRadioButton* rb_general_;

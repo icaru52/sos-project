@@ -13,6 +13,7 @@
   #include <wx/wx.h>
 #endif // WX_PRECOMP
 
+#include "menu.h"
 #include "frame.h"
 
 class App : public wxApp
@@ -21,6 +22,7 @@ class App : public wxApp
   virtual bool OnInit();
 
  private:
+  Menu* menu_ = nullptr;
   Frame* frame_ = nullptr;
 };
 
