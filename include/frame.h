@@ -13,19 +13,23 @@
   #include <wx/wx.h>
 #endif // WX_PRECOMP
 
-#include "board.h"
+#include "grid.h"
 
 class Frame: public wxFrame
 {
  public:
   Frame(const wxString& title, const wxPoint& pos, const wxSize& size, 
       const int width,  const int height);
-  ~Frame();
-  void onButtonClicked(wxCommandEvent& evt);
+  //~Frame();
+  void onTextBoxEnter(wxCommandEvent& event);
 
  private:
-  Board board_;
-  wxButton** btns_;
+  Grid* grid_;
+
+  wxBoxSizer* hbox_;
+  wxBoxSizer* vbox_;
+
+  wxTextCtrl* text_;
 
   wxRadioButton* rb_simple_;
   wxRadioButton* rb_general_;
@@ -35,5 +39,5 @@ class Frame: public wxFrame
   wxDECLARE_EVENT_TABLE();
 };
 
-#endif // SOS_INCLUDE_FRAME_H_
+#endif // SOS_INCLUDE_NEWFRAME_H_
 
